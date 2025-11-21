@@ -1,0 +1,107 @@
+{% extends 'haberler/base.html' %}
+
+{% block title %}{{ sayfa_basligi }} - Çağrı Haber{% endblock %}
+
+{% block content %}
+<!-- Manşet Haber (En Yeni) -->
+{% if haberler %}
+<div class="row mt-4 mb-5">
+    <div class="col-12">
+        {% with manset=haberler.0 %}
+        <div class="card manset-haber" style="
+            border: 3px solid #dc3545;
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+            overflow: hidden;
+        ">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    {% if manset.resim %}
+                    <img src="{{ manset.resim.url }}" alt="{{ manset.baslik }}" style="width: 100%; height: 400px; object-fit: cover;">
+                    {% else %}
+                    <div style="width: 100%; height: 400px; background: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 5rem;">📰</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <span class="badge bg-danger" style="font-size: 0.9rem; padding: 8px 15px;">
+                                🔥 MANŞET HABER
+                            </span>
+                            <span class="badge bg-secondary ms-2">{{ manset.kategori.isim }}</span>
+                        </div>
+                        <h2 class="card-title mb-3" style="color: #dc3545; font-weight: 700; font-size: 1.8rem;">
+                            {{ manset.baslik }}
+                        </h2>
+                        <p class="card-text mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+                            {{ manset.kisa_ozet }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                👤 {{ manset.editor.username }}<br>
+                                📅 {{ manset.olusturma_tarihi|date:"d.m.Y H:i" }}
+                            </small>
+                            <a href="{% url 'haberler:haber_detay' manset.id %}" class="btn btn-danger btn-lg">
+                                Haberi Oku →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+    </div>
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-12">
+        <h1 class="mb-4">📰 Son Haberler</h1>
+    </div>
+</div>
+
+<div class="row">
+    {% for haber in haberler %}
+    {% if not forloop.first %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card haber-card h-100">
+            {% if haber.resim %}
+            <img src="{{ haber.resim.url }}" class="card-img-top" alt="{{ haber.baslik }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                <span class="text-white fs-1">📰</span>
+            </div>
+            {% endif %}
+            
+            <div class="card-body">
+                <span class="badge bg-danger kategori-badge">{{ haber.kategori.isim }}</span>
+                <h5 class="card-title mt-2">{{ haber.baslik }}</h5>
+                <p class="card-text text-muted">{{ haber.kisa_ozet }}</p>
+            </div>
+            
+            <div class="card-footer bg-white border-top-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        👤 {{ haber.editor.username }}<br>
+                        📅 {{ haber.olusturma_tarihi|date:"d.m.Y H:i" }}
+                    </small>
+                    <a href="{% url 'haberler:haber_detay' haber.id %}" class="btn btn-sm btn-primary">
+                        Devamını Oku
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4>Henüz haber bulunmuyor</h4>
+            <p>Admin panelinden haber ekleyebilirsiniz.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

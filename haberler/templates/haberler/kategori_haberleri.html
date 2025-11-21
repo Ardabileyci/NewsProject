@@ -1,0 +1,63 @@
+{% extends 'haberler/base.html' %}
+
+{% block title %}{{ sayfa_basligi }} - Çağrı Haber{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-12">
+        <h1 class="mb-2">📁 {{ secili_kategori.isim }}</h1>
+        {% if secili_kategori.aciklama %}
+        <p class="text-muted">{{ secili_kategori.aciklama }}</p>
+        {% endif %}
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    {% for haber in haberler %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card haber-card h-100">
+            {% if haber.resim %}
+            <img src="{{ haber.resim.url }}" class="card-img-top" alt="{{ haber.baslik }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                <span class="text-white fs-1">📰</span>
+            </div>
+            {% endif %}
+            
+            <div class="card-body">
+                <span class="badge bg-danger kategori-badge">{{ haber.kategori.isim }}</span>
+                <h5 class="card-title mt-2">{{ haber.baslik }}</h5>
+                <p class="card-text text-muted">{{ haber.kisa_ozet }}</p>
+            </div>
+            
+            <div class="card-footer bg-white border-top-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        👤 {{ haber.editor.username }}<br>
+                        📅 {{ haber.olusturma_tarihi|date:"d.m.Y H:i" }}
+                    </small>
+                    <a href="{% url 'haberler:haber_detay' haber.id %}" class="btn btn-sm btn-primary">
+                        Devamını Oku
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4>Bu kategoride henüz haber bulunmuyor</h4>
+            <a href="{% url 'haberler:ana_sayfa' %}" class="btn btn-primary mt-2">Ana Sayfaya Dön</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <a href="{% url 'haberler:ana_sayfa' %}" class="btn btn-secondary">← Tüm Haberlere Dön</a>
+    </div>
+</div>
+{% endblock %}
+

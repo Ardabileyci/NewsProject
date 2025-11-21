@@ -1,0 +1,51 @@
+{% extends 'haberler/base.html' %}
+
+{% block title %}{{ haber.baslik }} - Çağrı Haber{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-lg-8 mx-auto">
+        <!-- Haber Başlığı -->
+        <article>
+            <div class="mb-3">
+                <a href="{% url 'haberler:kategori_haberleri' haber.kategori.id %}" class="badge bg-danger text-decoration-none">
+                    {{ haber.kategori.isim }}
+                </a>
+            </div>
+            
+            <h1 class="mb-3">{{ haber.baslik }}</h1>
+            
+            <div class="text-muted mb-4">
+                <small>
+                    👤 <strong>{{ haber.editor.first_name }} {{ haber.editor.last_name }}</strong>
+                    {% if not haber.editor.first_name %}
+                    <strong>{{ haber.editor.username }}</strong>
+                    {% endif %}
+                    | 📅 {{ haber.olusturma_tarihi|date:"d F Y, H:i" }}
+                </small>
+            </div>
+            
+            <!-- Haber Resmi -->
+            {% if haber.resim %}
+            <img src="{{ haber.resim.url }}" class="img-fluid rounded mb-4" alt="{{ haber.baslik }}">
+            {% endif %}
+            
+            <!-- Haber İçeriği -->
+            <div class="haber-icerik" style="font-size: 1.1em; line-height: 1.8;">
+                {{ haber.icerik|linebreaks }}
+            </div>
+            
+            <!-- Geri Dön Butonu -->
+            <div class="mt-5">
+                <a href="{% url 'haberler:ana_sayfa' %}" class="btn btn-secondary">
+                    ← Ana Sayfaya Dön
+                </a>
+                <a href="{% url 'haberler:kategori_haberleri' haber.kategori.id %}" class="btn btn-danger">
+                    {{ haber.kategori.isim }} Kategorisine Git
+                </a>
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}
+
