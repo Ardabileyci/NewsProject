@@ -61,17 +61,16 @@ python manage.py migrate
 
 Bu komutlar `db.sqlite3` adında bir dosya oluşturacak.
 
-## 6. Admin Kullanıcısı Oluşturun
+## 6. Admin Kullanıcısı (Otomatik Oluşturulur)
 
-```bash
-python manage.py createsuperuser
-```
+Migration işlemi sırasında admin kullanıcısı otomatik olarak oluşturulur.
 
-Size şunları soracak:
-- **Username**: İstediğiniz kullanıcı adını girin (örn: admin)
-- **Email**: E-posta adresiniz (boş bırakabilirsiniz)
-- **Password**: Şifrenizi girin (yazarken ekranda görünmez, bu normaldir)
-- **Password (again)**: Şifrenizi tekrar girin
+**Admin Giriş Bilgileri:**
+- **Kullanıcı Adı**: `admin`
+- **Şifre**: `admin123`
+- **E-posta**: admin@haberler.com
+
+> ⚠️ **Not**: Bu bir ödev projesidir. Gerçek bir projede bu şekilde sabit şifre kullanmayın!
 
 ## 7. Sunucuyu Başlatın
 

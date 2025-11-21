@@ -51,13 +51,18 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 5. Admin Kullanıcısı (Zaten Mevcut)
+### 5. Admin Kullanıcısı (Otomatik Oluşturulur)
 
-Proje hazır örnek verilerle geliyor. Admin giriş bilgileri:
-- **Kullanıcı adı**: admin
-- **Şifre**: admin123
+Migration sırasında admin kullanıcısı otomatik olarak oluşturulur:
 
-İsterseniz yeni kullanıcı oluşturabilirsiniz:
+**Admin Giriş Bilgileri:**
+- **Kullanıcı Adı**: `admin`
+- **Şifre**: `admin123`
+- **E-posta**: admin@haberler.com
+
+> ⚠️ **Not**: Bu bilgiler kod içinde tanımlıdır (ödev projesi için). Gerçek projelerde bu yöntem kullanılmamalıdır!
+
+İsterseniz yeni kullanıcı da oluşturabilirsiniz:
 ```bash
 python manage.py createsuperuser
 ```
